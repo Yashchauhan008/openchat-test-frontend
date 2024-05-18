@@ -1,46 +1,145 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
+import { useParams } from 'react-router-dom';
 
 const ShowPost = () => {
-  const { postId } = useParams(); // Get the postId from the URL parameters
+  const { id } = useParams();
   const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [data, setData] = useState(() => {
+    const savedData = localStorage.getItem('userData');
+    return savedData
+      ? JSON.parse(savedData)
+      : {
+          username: "",
+          userInstaId: "",
+          likedPosts: [],
+          likedComments: [],
+          likedReplies: [],
+          dislikedPosts: [],
+          dislikedComments: [],
+          dislikedReplies: [],
+        };
+  });
 
   useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/post/${id}`);
+        setPost(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching post:', error);
+        setError('Failed to fetch post. Please try again later.');
+        setLoading(false);
+      }
+    };
     fetchPost();
-  }, []);
+  }, [id]);
 
-  const fetchPost = async () => {
+  const handleLikeChange = async (postId, isLiked, isMoving) => {
     try {
-      const response = await axios.get(`http://localhost:5000/post/${postId}`);
-      setPost(response.data);
-      console.log(response.data)
+      if (isLiked) {
+        await axios.post(`http://localhost:5000/post/${postId}/like`);
+        updatePostLikesDislikes(postId, 'like', isMoving ? 2 : 1);
+      } else {
+        await axios.post(`http://localhost:5000/post/${postId}/dislike`);
+        updatePostLikesDislikes(postId, 'dislike', isMoving ? 2 : 1);
+      }
     } catch (error) {
-      console.error('Error fetching post:', error);
+      console.error('Error updating like/dislike:', error);
     }
   };
 
-  if (!post) {
-    return <div>Loading...</div>;
-  }
+  const updatePostLikesDislikes = (postId, action, incrementValue = 1) => {
+    setPost((prevPost) => ({
+      ...prevPost,
+      like: action === 'like' ? prevPost.like + incrementValue : prevPost.like,
+      dislike: action === 'dislike' ? prevPost.dislike + incrementValue : prevPost.dislike,
+    }));
+  };
+
+  const toggleLike = (postId) => {
+    if (data.dislikedPosts.includes(postId)) {
+      setData((prevData) => ({
+        ...prevData,
+        dislikedPosts: prevData.dislikedPosts.filter((id) => id !== postId),
+        likedPosts: [...prevData.likedPosts, postId],
+      }));
+      handleLikeChange(postId, true, true);
+    } else if (data.likedPosts.includes(postId)) {
+      setData((prevData) => ({
+        ...prevData,
+        likedPosts: prevData.likedPosts.filter((id) => id !== postId),
+      }));
+      handleLikeChange(postId, false);
+    } else {
+      setData((prevData) => ({
+        ...prevData,
+        likedPosts: [...prevData.likedPosts, postId],
+      }));
+      handleLikeChange(postId, true);
+    }
+  };
+
+  const toggleDislike = (postId) => {
+    if (data.likedPosts.includes(postId)) {
+      setData((prevData) => ({
+        ...prevData,
+        likedPosts: prevData.likedPosts.filter((id) => id !== postId),
+        dislikedPosts: [...prevData.dislikedPosts, postId],
+      }));
+      handleLikeChange(postId, false, true);
+    } else if (data.dislikedPosts.includes(postId)) {
+      setData((prevData) => ({
+        ...prevData,
+        dislikedPosts: prevData.dislikedPosts.filter((id) => id !== postId),
+      }));
+      handleLikeChange(postId, true);
+    } else {
+      setData((prevData) => ({
+        ...prevData,
+        dislikedPosts: [...prevData.dislikedPosts, postId],
+      }));
+      handleLikeChange(postId, false);
+    }
+  };
+
+  useEffect(() => {
+    localStorage.setItem('userData', JSON.stringify(data));
+  }, [data]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
+  if (!post) return <p>No post found</p>;
 
   return (
-    <div className='post-details'>
+    <div className='post-detail'>
       <h1>{post.content}</h1>
       <p>{post.username}</p>
       <p><strong>Instagram ID:</strong> {post.userInstaId || 'N/A'}</p>
-      <p>Likes: {post.like}</p>
+      <p>Total: {post.like - post.dislike}</p>
       <p>Comments: {post.comment.length}</p>
-      <p>By {post.userInstaId} {formatDistanceToNow(new Date(post.createdAt))} ago</p>
-      <div className='comments'>
-        <h2>Comments</h2>
-        {post.comment.map((comment) => (
-          <div key={comment._id} className='comment'>
-            <p>{comment.text}</p>
-            <p>By {comment.username}</p>
-          </div>
-        ))}
+      <p>Posted {formatDistanceToNow(new Date(post.createdAt))} ago</p>
+      <div>
+        <label>
+          <input
+            type="checkbox"
+            checked={data.likedPosts.includes(post._id)}
+            onChange={() => toggleLike(post._id)}
+          />
+          Like
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            checked={data.dislikedPosts.includes(post._id)}
+            onChange={() => toggleDislike(post._id)}
+          />
+          Dislike
+        </label>
       </div>
     </div>
   );

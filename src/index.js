@@ -16,7 +16,7 @@ root.render(
       <Route path='/' element={<HomePage/>}/>
       <Route path='/posts' element={<LandingPage/>}/>
       <Route path='/upload' element={<UploadPost/>}/>
-      <Route path="/post/:Id" element={<ShowPost />} />
+      <Route path="/post/:id" element={<ShowPost />} />
     </Routes>
   </BrowserRouter>
   </>

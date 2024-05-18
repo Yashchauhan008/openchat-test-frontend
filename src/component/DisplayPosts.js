@@ -52,28 +52,36 @@ const DisplayPosts = () => {
     navigate(`/post/${postId}`);
   };
 
-  const updatePostLikesDislikes = (postId, action) => {
+  const updatePostLikesDislikes = (postId, action, incrementValue = 1) => {
     setPosts((prevPosts) =>
       prevPosts.map((post) =>
         post._id === postId
           ? {
               ...post,
-              like: action === 'like' ? post.like + 1 : post.like,
-              dislike: action === 'dislike' ? post.dislike + 1 : post.dislike,
+              like: action === 'like' ? post.like + incrementValue : post.like,
+              dislike: action === 'dislike' ? post.dislike + incrementValue : post.dislike,
             }
           : post
       )
     );
   };
 
-  const handleLikeChange = async (postId, isLiked) => {
+  const handleLikeChange = async (postId, isLiked, isMoving) => {
     try {
       if (isLiked) {
         await axios.post(`http://localhost:5000/post/${postId}/like`);
-        updatePostLikesDislikes(postId, 'like');
+        if (isMoving) {
+          updatePostLikesDislikes(postId, 'like', 2); // Increase the like count by 2
+        } else {
+          updatePostLikesDislikes(postId, 'like', 1); // Increase the like count by 1
+        }
       } else {
         await axios.post(`http://localhost:5000/post/${postId}/dislike`);
-        updatePostLikesDislikes(postId, 'dislike');
+        if (isMoving) {
+          updatePostLikesDislikes(postId, 'dislike', 2); // Increase the dislike count by 2
+        } else {
+          updatePostLikesDislikes(postId, 'dislike', 1); // Increase the dislike count by 1
+        }
       }
     } catch (error) {
       console.error('Error updating like/dislike:', error);
@@ -81,34 +89,52 @@ const DisplayPosts = () => {
   };
 
   const toggleLike = (postId) => {
-    if (data.likedPosts.includes(postId)) {
-      setData(prevData => ({
+    if (data.dislikedPosts.includes(postId)) {
+      // If the post is already disliked, remove it from the disliked list, add it to the liked list, and increase the like count by 2
+      setData((prevData) => ({
         ...prevData,
-        likedPosts: prevData.likedPosts.filter(id => id !== postId),
+        dislikedPosts: prevData.dislikedPosts.filter((id) => id !== postId),
+        likedPosts: [...prevData.likedPosts, postId],
+      }));
+      handleLikeChange(postId, true, true); // Like the post, with an increase of 2
+    } else if (data.likedPosts.includes(postId)) {
+      // If the post is already liked, remove it from the liked list
+      setData((prevData) => ({
+        ...prevData,
+        likedPosts: prevData.likedPosts.filter((id) => id !== postId),
       }));
       handleLikeChange(postId, false); // Dislike the post
     } else {
-      setData(prevData => ({
+      // If the post is neither liked nor disliked, add it to the liked list
+      setData((prevData) => ({
         ...prevData,
         likedPosts: [...prevData.likedPosts, postId],
-        dislikedPosts: prevData.dislikedPosts.filter(id => id !== postId),
       }));
       handleLikeChange(postId, true); // Like the post
     }
   };
   
   const toggleDislike = (postId) => {
-    if (data.dislikedPosts.includes(postId)) {
-      setData(prevData => ({
+    if (data.likedPosts.includes(postId)) {
+      // If the post is already liked, remove it from the liked list, add it to the disliked list, and decrease the like count by 2
+      setData((prevData) => ({
         ...prevData,
-        dislikedPosts: prevData.dislikedPosts.filter(id => id !== postId),
+        likedPosts: prevData.likedPosts.filter((id) => id !== postId),
+        dislikedPosts: [...prevData.dislikedPosts, postId],
+      }));
+      handleLikeChange(postId, false, true); // Dislike the post, with a decrease of 2
+    } else if (data.dislikedPosts.includes(postId)) {
+      // If the post is already disliked, remove it from the disliked list
+      setData((prevData) => ({
+        ...prevData,
+        dislikedPosts: prevData.dislikedPosts.filter((id) => id !== postId),
       }));
       handleLikeChange(postId, true); // Like the post
     } else {
-      setData(prevData => ({
+      // If the post is neither liked nor disliked, add it to the disliked list
+      setData((prevData) => ({
         ...prevData,
         dislikedPosts: [...prevData.dislikedPosts, postId],
-        likedPosts: prevData.likedPosts.filter(id => id !== postId),
       }));
       handleLikeChange(postId, false); // Dislike the post
     }
