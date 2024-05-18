@@ -21,6 +21,8 @@ const DisplayPosts = () => {
         };
   });
   const [filter, setFilter] = useState('new');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,6 +31,7 @@ const DisplayPosts = () => {
 
   const fetchPosts = async () => {
     try {
+      setLoading(true);
       const response = await axios.get('http://localhost:5000/post');
       let sortedPosts = response.data;
       if (filter === 'top') {
@@ -37,8 +40,11 @@ const DisplayPosts = () => {
         sortedPosts = sortedPosts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       }
       setPosts(sortedPosts);
+      setLoading(false);
     } catch (error) {
       console.error('Error fetching posts:', error);
+      setError('Failed to fetch posts. Please try again later.');
+      setLoading(false);
     }
   };
 
@@ -46,33 +52,71 @@ const DisplayPosts = () => {
     navigate(`/post/${postId}`);
   };
 
-  const handleLike = async (postId) => {
+  const updatePostLikesDislikes = (postId, action) => {
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post._id === postId
+          ? {
+              ...post,
+              like: action === 'like' ? post.like + 1 : post.like,
+              dislike: action === 'dislike' ? post.dislike + 1 : post.dislike,
+            }
+          : post
+      )
+    );
+  };
+
+  const handleLikeChange = async (postId, isLiked) => {
     try {
-      const response = await axios.put(`http://localhost:5000/post/like/${postId}`);
-      const updatedPost = response.data;
-      setPosts((prevPosts) =>
-        prevPosts.map((post) =>
-          post._id === postId ? { ...post, like: updatedPost.like } : post
-        )
-      );
+      if (isLiked) {
+        await axios.post(`http://localhost:5000/post/${postId}/like`);
+        updatePostLikesDislikes(postId, 'like');
+      } else {
+        await axios.post(`http://localhost:5000/post/${postId}/dislike`);
+        updatePostLikesDislikes(postId, 'dislike');
+      }
     } catch (error) {
-      console.error('Error liking post:', error);
+      console.error('Error updating like/dislike:', error);
     }
   };
 
-  const handleDislike = async (postId) => {
-    try {
-      const response = await axios.put(`http://localhost:5000/post/dislike/${postId}`);
-      const updatedPost = response.data;
-      setPosts((prevPosts) =>
-        prevPosts.map((post) =>
-          post._id === postId ? { ...post, dislike: updatedPost.dislike } : post
-        )
-      );
-    } catch (error) {
-      console.error('Error disliking post:', error);
+  const toggleLike = (postId) => {
+    if (data.likedPosts.includes(postId)) {
+      setData(prevData => ({
+        ...prevData,
+        likedPosts: prevData.likedPosts.filter(id => id !== postId),
+      }));
+      handleLikeChange(postId, false); // Dislike the post
+    } else {
+      setData(prevData => ({
+        ...prevData,
+        likedPosts: [...prevData.likedPosts, postId],
+        dislikedPosts: prevData.dislikedPosts.filter(id => id !== postId),
+      }));
+      handleLikeChange(postId, true); // Like the post
     }
   };
+  
+  const toggleDislike = (postId) => {
+    if (data.dislikedPosts.includes(postId)) {
+      setData(prevData => ({
+        ...prevData,
+        dislikedPosts: prevData.dislikedPosts.filter(id => id !== postId),
+      }));
+      handleLikeChange(postId, true); // Like the post
+    } else {
+      setData(prevData => ({
+        ...prevData,
+        dislikedPosts: [...prevData.dislikedPosts, postId],
+        likedPosts: prevData.likedPosts.filter(id => id !== postId),
+      }));
+      handleLikeChange(postId, false); // Dislike the post
+    }
+  };
+  
+  useEffect(() => {
+    localStorage.setItem('userData', JSON.stringify(data));
+  }, [data]);
 
   return (
     <div className='posts'>
@@ -84,23 +128,45 @@ const DisplayPosts = () => {
           Top
         </button>
       </div>
-      {posts.map((post) => (
-        <div className='postblock' key={post._id}>
-          <h1>{post.content}</h1>
-          <p>{post.username}</p>
-          <p>
-            <strong>Instagram ID:</strong> {post.userInstaId || 'N/A'}
-          </p>
-          <p>Total: {post.like - post.dislike}</p>
-          <p>Comments: {post.comment.length}</p>
-          <p>By {post.userInstaId} {formatDistanceToNow(new Date(post.createdAt))} ago</p>
-          <div>
-            <button onClick={() => handlePostClick(post._id)}>View Post</button>
-            <button onClick={() => handleLike(post._id)}>Like</button>
-            <button onClick={() => handleDislike(post._id)}>Dislike</button>
+      {loading ? (
+        <p>Loading posts...</p>
+      ) : error ? (
+        <p>{error}</p>
+      ) : (
+        posts.map((post) => (
+          <div className='postblock' key={post._id}>
+            <h1>{post.content}</h1>
+            <p>{post.username}</p>
+            <p>
+              <strong>Instagram ID:</strong> {post.userInstaId || 'N/A'}
+            </p>
+            <p>Total: {post.like - post.dislike}</p>
+            <p>Comments: {post.comment.length}</p>
+            <p>By {post.userInstaId} {formatDistanceToNow(new Date(post.createdAt))} ago</p>
+            <div>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={data.likedPosts.includes(post._id)}
+                  onChange={() => toggleLike(post._id)}
+                />
+                Like
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={data.dislikedPosts.includes(post._id)}
+                  onChange={() => toggleDislike(post._id)}
+                />
+                Dislike
+              </label>
+            </div>
+            <div>
+              <button onClick={() => handlePostClick(post._id)}>View Post</button>
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      )}
     </div>
   );
 };
