@@ -1,0 +1,395 @@
+@font-face {
+    font-family: coffee;
+    src: url('../assets/CoffeeHealing-1GrKe.ttf');
+}
+.yash-banner {
+    font-size: 10px;
+    position: absolute;
+    right: 50%;
+    bottom: 0;
+    transform: translate(50%,0%); 
+    display: inline-block;
+    background-color: var(--bg-color);
+    padding: 0px 40px; 
+    border: 2px dashed var(--color-2);
+    color: var(--color-3);
+    border-radius: 50px 50px 0 0; 
+  }
+  
+.home{
+    background-color: var(--color-1);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    /* overflow: hidden; */
+}
+nav{
+    height: 18vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 80px;
+    /* padding-top: 20px; */
+}
+.lnav{
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.lnav>h2{
+    transform: translateY(-3px);
+    color: var(--bg-color);
+    font-family: coffee;
+    font-size: 40px;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+.rnav{
+    font-size: 10px;
+}
+.home-cnt{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    height: 82vh;
+    width: 100%;
+}
+.lhome{
+    /* background-color: yellow; */
+    padding-left: 50px;
+    height: 82vh;
+    width: 44vw;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.headline{
+    font-size: 25px;
+    line-height: 35px;
+}
+.headline h1{
+    font-size: 70px;
+    white-space: nowrap;
+    /* background-color: red; */
+}
+.headline span{
+    color: var(--bg-color);
+}
+.lhome p{
+    font-weight:500;
+    transform: translateX(-10px);
+}
+.lhome form{
+    transform: translateX(-80px);
+}
+.lhome input{
+    text-transform: uppercase;
+    margin-top: 10px;
+    box-shadow: 4px 6px 0px black;
+    /* transform: translateX(-50px); */
+    padding: 20px 25px;
+    border: none;
+    background:var(--bg-color);
+    border-radius: 50px 50px 50px 0;
+    color: var(--color-2);
+    outline: 0;
+    font-size: 20px;
+    font-weight: 700;
+}
+input::placeholder{
+    color: var(--color-1);
+    font-size: 20px;
+}
+input:focus{
+    border: none;
+}
+.lhome button{
+    margin-top: 20px;
+}   
+
+/* --------------------------------buuuon-------------- */ 
+.home button {
+    /* transform: translateX(-45px); */
+    --secondary-color: #fff;
+    --hover-color: #111;
+    --arrow-width: 10px;
+    --arrow-stroke: 2px;
+    box-sizing: border-box;
+    border: 0;
+    border-radius: 0px 50px 50px 50px;
+    color: var(--secondary-color);
+    padding:15px 30px;
+    background: var(--color-2);
+    display: flex;
+    transition: 0.2s background;
+    align-items: center;
+    gap: 0.6em;
+    font-weight: bold;
+    font-size: 20px;
+  }
+  
+  .home button .arrow-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .home button .arrow {
+    margin-top: 1px;
+    width: var(--arrow-width);
+    background: var(--primary-color);
+    height: var(--arrow-stroke);
+    position: relative;
+    transition: 0.2s;
+  }
+  
+  .home button .arrow::before {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    border: solid var(--secondary-color);
+    border-width: 0 var(--arrow-stroke) var(--arrow-stroke) 0;
+    display: inline-block;
+    top: -3px;
+    right: 3px;
+    transition: 0.2s;
+    padding: 3px;
+    transform: rotate(-45deg);
+  }
+  
+  .home button:hover {
+    box-shadow: 4px 6px 0px var(--bg-color);
+    background-color: var(--hover-color);
+  }
+  
+  .home button:hover .arrow {
+    background: var(--secondary-color);
+  }
+  
+  .home button:hover .arrow:before {
+    right: 0;
+  }
+
+
+.rhome{
+    position: relative;
+    width: 52vw;
+    height: 82vh;
+}
+.emoji{
+    font-size: 35px;
+    position: absolute;
+    z-index: 0  ;
+}
+.emoji1{
+    top: 70px;
+    left: 30px;
+    animation: moveUpDown 2s infinite 1s; /* Apply the animation */
+}
+.emoji2{
+    top: 500px;
+    right: 190px;
+    animation: moveUpDown 2s infinite 1.2s; /* Apply the animation */
+    
+}
+.emoji3{
+    top: 300px;
+    right: 490px;
+    animation: moveUpDown 2s infinite 1.4s; /* Apply the animation */
+}
+.emoji4{
+    top: 0px;
+    right:100px;
+    animation: moveUpDown 2s infinite 0.2s; /* Apply the animation */
+}
+.emoji5{
+    top: 140px;
+    right: 300px;
+    animation: moveUpDown 2s infinite 0.1s; /* Apply the animation */
+}
+.emoji6{
+    top: 350px;
+    left: 0;
+    animation: moveUpDown 2s infinite 0.5s; /* Apply the animation */
+}
+.emoji7{
+    top: 0px;
+    right: 540px;
+    animation: moveUpDown 2s infinite 0.3s; /* Apply the animation */
+}
+.emoji8{
+    top: 250px;
+    right: 100px;
+    animation: moveUpDown 2s infinite 0.7s; /* Apply the animation */
+}
+.emoji9{
+    top: 500px;
+    left: 150px;
+    animation: moveUpDown 2s infinite 0.9s; /* Apply the animation */
+}
+.emoji10{
+    top: 650px;
+    left: 530px;
+    animation: moveUpDown 2s infinite 0.9s; /* Apply the animation */
+}
+.emoji11{
+    top: 100px;
+    left: 450px;
+    animation: moveUpDown 2s infinite 0.9s; /* Apply the animation */
+}
+.avt-cover{
+    position: absolute;
+    overflow: hidden;
+    height: 150px;
+    width: 150px;
+    border-radius: 15% 150% 150% 150%;
+    background-color: var(--color-3);
+    transition: transform 0.3s ease;
+}
+.av1{
+    top: 0px;
+    right: 100px;
+    rotate: -90deg;
+}
+.av2{
+    top: 150px;
+    right: 540px;
+    rotate: 180deg;
+}
+.av3{
+    height: 200px;
+    width: 200px;
+    top: 350px;
+    right: 100px;
+}
+.avatar{
+    height: 150px;
+    width: 150px;
+}
+.avatar1{
+    rotate: 90deg;
+    height: 160px;
+    width: 160px;
+    transform: translateY(5px);
+}
+.avatar2{
+    rotate: 180deg;
+}
+.avatar3{
+    height: 200px;
+    width: 200px;
+}
+img:hover{
+    transform: scale(1.2);
+    transition: transform 0.3s ease;
+}
+.interection{
+    z-index: 100;
+    transform: rotate(-5deg);
+    position: absolute;
+    top: 400px;
+    right: 270px;
+    height: 70px;
+    width: 250px;
+    background-color: var(--bg-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    gap: 8px;
+}
+.inter-elem{
+    font-size: 35px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: var(--color-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s;
+    cursor:pointer;
+}
+.inter-elem:hover{
+    transform: scale(1.3) translateY(-5px);
+    border: 2px solid var(--bg-color);
+}
+.chat{
+    position: absolute;
+    display: inline-block;
+    background-color: var(--bg-color);
+    padding: 20px 40px;
+    font-size: 25px;
+    font-weight: normal;
+    border-radius: 20px 20px 0 20px;
+    color: var(--color-1);
+    z-index: 100;
+}
+.chat1{
+    top: 0;
+    right: 300px;
+}
+.chat2{
+    top: 200px;
+    right: 160px;
+    background-color: var(--color-3);
+    color: var(--bg-color);
+    border-radius: 20px 20px 20px 0px;
+}
+
+@keyframes moveUpDown {
+    0% {
+      transform: translateY(0); /* Initial position */
+    }
+    50% {
+      transform: translateY(-20px); /* Move up by 20px */
+    }
+    100% {
+      transform: translateY(0); /* Move back to initial position */
+    }
+  }
+  .chatblock{
+    width: 800px;
+  }
+
+
+
+  /* Mobile devices (up to 600px) */
+@media only screen and (max-width: 600px) {
+    .yash-banner {
+      font-size: 8px;
+      padding: 5px 20px;
+    }
+  }
+  
+  /* Tablets (601px to 900px) */
+  @media only screen and (min-width: 601px) and (max-width: 900px) {
+    .yash-banner {
+      font-size: 9px;
+      padding: 8px 30px;
+    }
+  }
+  
+  /* Laptops and desktops (901px and up) */
+  @media only screen and (min-width: 901px) and (max-width: 1200px) {
+    .yash-banner {
+      font-size: 10px;
+      padding: 10px 40px;
+    }
+  }
+  
+  /* Large desktops (1201px and up) */
+  @media only screen and (min-width: 1201px) {
+    .yash-banner {
+      font-size: 12px;
+      padding: 12px 50px;
+    }
+  }
