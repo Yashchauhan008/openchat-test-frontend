@@ -66,18 +66,20 @@ img{
     /* background-color: yellow; */
     padding-left: 50px;
     height: 82vh;
-    width: 44vw;
+    width: 40vw;
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 .headline{
     font-size: 25px;
-    line-height: 35px;
+    line-height: 80px;
+    padding: 20px 0;
 }
 .headline h1{
     font-size: 70px;
     white-space: nowrap;
+
     /* background-color: red; */
 }
 .headline span{
@@ -104,6 +106,7 @@ img{
     font-size: 20px;
     font-weight: 700;
 }
+
 input::placeholder{
     color: var(--color-1);
     font-size: 20px;

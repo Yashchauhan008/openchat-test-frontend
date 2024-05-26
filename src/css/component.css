@@ -1,0 +1,128 @@
+.btn1 {
+    display: block;
+    position: relative;
+    width: 56px;
+    height: 56px;
+    margin: 0;
+    overflow: hidden;
+    outline: none;
+    cursor: pointer;
+    border: 0;
+  }
+  
+  .btn1:before,
+  .btn1:after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    inset: 7px;
+  }
+  
+  .btn1:before {
+    border: 4px solid var(--bg-color);
+    transition: opacity 0.4s cubic-bezier(0.77, 0, 0.175, 1) 80ms,
+      transform 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) 80ms;
+  }
+  
+  .btn1:after {
+    border: 4px solid var(--bg-color);
+    transform: scale(1.3);
+    transition: opacity 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+      transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    opacity: 0;
+  }
+  
+  .btn1:hover:before,
+  .btn1:focus:before {
+    opacity: 0;
+    transform: scale(0.7);
+    transition: opacity 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+      transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  .btn1:hover:after,
+  .btn1:focus:after {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.4s cubic-bezier(0.77, 0, 0.175, 1) 80ms,
+      transform 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) 80ms;
+  }
+  
+  .btn1-box {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  .btn1-elem {
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin: 17px 18px 0 18px;
+    transform: rotate(180deg);
+    fill: var(--bg-color);
+  }
+  
+  .btn1:hover .btn1-box,
+  .btn1:focus .btn1-box {
+    transition: 0.4s;
+    transform: translateX(-56px);
+  }
+  
+  .btn2 {
+    font-family: inherit;
+    font-size: 20px;
+    background: var(--bg-color);
+    color: white;
+    padding: 0.7em 1em;
+    padding-left: 0.9em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.2s;
+    cursor: pointer;
+    width: 400px;
+  }
+  
+  .btn2 span {
+    display: block;
+    margin-left: 0.3em;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .btn2 svg {
+    display: block;
+    transform-origin: center center;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .btn2:active .svg-wrapper {
+    animation: fly-1 0.6s ease-in-out infinite alternate;
+  }
+  
+  .btn2:active svg {
+    transform: translateX(5.2em) rotate(45deg) scale(1.1);
+  }
+  
+  .btn2:active span {
+    transform: translateX(15em);
+  }
+  
+  .btn2:active {
+    transform: scale(0.95);
+  }
+  
+  @keyframes fly-1 {
+    from {
+      transform: translateY(0.1em);
+    }
+  
+    to {
+      transform: translateY(-0.1em);
+    }
+  }
+  

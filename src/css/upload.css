@@ -1,0 +1,71 @@
+.upload{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-direction: column;
+    background-color: var(--color-1);
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.upload form{
+    /* background-color: red; */
+    width: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.bbutton{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 600px;
+}
+
+.up-content{
+    border-radius: 10px;
+    border: 2px dashed var(--bg-color);
+    max-width: 500px;
+    /* width: 400px; */
+    height: 80px;
+}
+
+.user-info{
+    /* background-color: red; */
+    width: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.up-input{
+    /* background-color: pink; */
+}
+
+.user-info{
+    /* background-color: green ; */
+    padding-left: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    /* border: 2px dashed var(--bg-color); */
+}
+
+.user-info .up-input input{
+    /* background-color: red; */
+    border-radius: 5px;
+    border: 2px dashed var(--bg-color);
+}
+.upload form input ,
+.upload form textarea
+{
+    background-color: red;
+    border: 5px solid black;
+}
+.upload form input:active,
+.upload form textarea:active
+{
+    outline: none;
+}
