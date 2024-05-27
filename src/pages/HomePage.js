@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/home.css";
 import logo from "../assets/logo.png";
@@ -20,9 +20,20 @@ const HomePage = () => {
     dislikedReplies: [],
   });
 
+  useEffect(() => {
+    const savedData = localStorage.getItem("userData");
+    if (savedData) {
+      const userData = JSON.parse(savedData);
+      if (userData.username) {
+        navigate("/posts");
+      }
+    }
+  }, [navigate]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    alert("once the username is save then it can not be change")
     const newData = { ...data, username: username };
     setData(newData);
     localStorage.setItem("userData", JSON.stringify(newData));
@@ -35,11 +46,11 @@ const HomePage = () => {
   return (
     <>
       <div className="home">
-        <div className="yash-banner">
+        <a className="yash-banner" href="">
           <h2>
             made with ❤️ by <span>YASH</span>
           </h2>
-        </div>
+        </a>
         <nav>
           <div className="lnav">
             <img src={logo} />
@@ -50,19 +61,22 @@ const HomePage = () => {
         <div className="home-cnt">
           <div className="lhome">
             <div className="headline">
-              <h1>
-                <span>Connect</span> with
-              </h1>
-              <h1>your circle in a</h1>
-              <h1>fun way!</h1>
+              <h2>
+                <h1>
+                  <span>Connect</span> with
+                </h1>
+                <h1>your circle in </h1>
+                <h1>a fun way!</h1>
+              </h2>
             </div>
-            <p>
-              Lots of templates and an easy-to-use interface! Create a Logo
-              <br />
-              Online with Turbologo™. Turbologo™ - Online Logo Maker <br />» Get
-              a logo in 2 minutes for free!
-            </p>
-            <form onSubmit={handleSubmit}>
+            <div className="description">
+              <p>
+                Welcome to OpenTalk, a platform where you can share your
+                thoughts anonymously. No account needed, just write, like, and
+                dislike freely!
+              </p>
+            </div>
+            <form onSubmit={handleSubmit} className="homeform">
               <input
                 placeholder="@username"
                 type="text"
@@ -82,30 +96,29 @@ const HomePage = () => {
           </div>
           <div className="rhome">
             <div className="chatblock">
-
-            <div className="interection">
-              <div className="inter-elem">💖</div>
-              <div className="inter-elem">👍</div>
-              <div className="inter-elem">👻</div>
-              <div className="inter-elem">👎</div>
-            </div>
-            <h1 className="chat chat1">everything is mine</h1>
-            <h1 className="chat chat2">mari koii choice j nathi</h1>
-            <div className="avt-cover av1">
-              <div className="avatar avatar1">
-                <img src={avatar3} />
+              <div className="interection">
+                <div className="inter-elem">💖</div>
+                <div className="inter-elem">👍</div>
+                <div className="inter-elem">👻</div>
+                <div className="inter-elem">👎</div>
               </div>
-            </div>
-            <div className="avt-cover av2">
-              <div className="avatar avatar2">
-                <img src={avatar2} />
+              <h1 className="chat chat1">web3 is booming</h1>
+              <h1 className="chat chat2">My new site is launch check out</h1>
+              <div className="avt-cover av1">
+                <div className="avatar avatar1">
+                  <img src={avatar3} />
+                </div>
               </div>
-            </div>
-            <div className="avt-cover av3">
-              <div className="avatar avatar3">
-                <img src={avatar1} />
+              <div className="avt-cover av2">
+                <div className="avatar avatar2">
+                  <img src={avatar2} />
+                </div>
               </div>
-            </div>
+              <div className="avt-cover av3">
+                <div className="avatar avatar3">
+                  <img src={avatar1} />
+                </div>
+              </div>
             </div>
             <div className="emoji emoji1">💖</div>
             <div className="emoji emoji2">💖</div>

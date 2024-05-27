@@ -43,13 +43,21 @@ const ShowPost = () => {
     try {
       if (isLiked) {
         await axios.post(`http://localhost:5000/post/${postId}/like`);
-        updatePostLikesDislikes(postId, 'like', isMoving ? 2 : 1);
+        if (isMoving) {
+          updatePostLikesDislikes(postId, "like", 2); // Increase the like count by 2
+        } else {
+          updatePostLikesDislikes(postId, "like", 1); // Increase the like count by 1
+        }
       } else {
         await axios.post(`http://localhost:5000/post/${postId}/dislike`);
-        updatePostLikesDislikes(postId, 'dislike', isMoving ? 2 : 1);
+        if (isMoving) {
+          updatePostLikesDislikes(postId, "dislike", 2); // Increase the dislike count by 2
+        } else {
+          updatePostLikesDislikes(postId, "dislike", 1); // Increase the dislike count by 1
+        }
       }
     } catch (error) {
-      console.error('Error updating like/dislike:', error);
+      console.error("Error updating like/dislike:", error);
     }
   };
 

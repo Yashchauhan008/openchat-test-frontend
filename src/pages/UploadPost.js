@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../css/upload.css";
@@ -8,22 +8,38 @@ import UploadButton from "../component/UploadButton";
 
 const UploadPost = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
   const [content, setContent] = useState("");
   const [userInstaId, setUserInstaId] = useState("");
+  const [showInstaIdInput, setShowInstaIdInput] = useState(false);
+
+  useEffect(() => {
+    const savedData = localStorage.getItem("userData");
+    const userData = JSON.parse(savedData);
+    setUserInstaId(userData.userInstaId || "");
+    setShowInstaIdInput(!userData.userInstaId);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    alert("once instagram id id save then it can not to be change")
     try {
-      const newPost = { username, content, userInstaId };
+      const savedData = localStorage.getItem("userData");
+      const userData = JSON.parse(savedData);
+      const newPost = {
+        username: userData.username,
+        content,
+        userInstaId: userInstaId || userData.userInstaId,
+      };
       const response = await axios.post(
         "http://localhost:5000/post/upload",
         newPost
       );
-      // setPosts([...posts, response.data]);
-      setUsername("");
       setContent("");
-      setUserInstaId("");
+
+      // Update the userInstaId in localStorage
+      const updatedUserData = { ...userData, userInstaId };
+      localStorage.setItem("userData", JSON.stringify(updatedUserData));
+
       navigate("/posts");
     } catch (error) {
       console.error("Error adding post:", error);
@@ -34,69 +50,45 @@ const UploadPost = () => {
     <>
       <div className="upload">
         <Header />
-        <div className="bbutton" onClick={() => navigate("/posts")}>
-          <BackButton />
+        <div className="back-button" onClick={()=>navigate('/posts')}>
+          <BackButton/>
         </div>
-        {/* <button onClick={()=>navigate('/posts')}>back</button> */}
-        <h1 className="main">
-          {" "}
-          <p>
-            add your <span>#1</span> productivity hack.
-          </p>
-        </h1>
-
-        <form onSubmit={handleSubmit}>
-          <div className="up-input">
-            <label htmlFor="content">Your hack</label>
-            <br />
+        <form onSubmit={handleSubmit} className="upload-form">
+          <h1 className="main">
+            <p>
+              add your <span>#1</span>
+            </p>
+            <p>productivity hack</p>
+          </h1>
+          <div className="hack-cnt">
+            <label htmlFor="content" className="content-label">
+              Your Hack
+            </label>
             <textarea
-              className="up-content"
               id="content"
-              name="content"
               value={content}
               onChange={(e) => setContent(e.target.value)}
               rows="4"
               cols="50"
               required
-            ></textarea>
-          </div>
-          <br />
-          <br />
-
-          <div className="user-info">
-          <div className="up-input">
-            <label htmlFor="username">Username:</label>
-            <br />
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
+              className="content-textarea"
             />
-            </div>
-            <br />
-            <br />
-
-            <div className="up-input">
-            <label htmlFor="userInstaId">Instagram ID:</label>
-            <br />
-            <input
-              type="text"
-              id="userInstaId"
-              name="userInstaId"
-              value={userInstaId}
-              onChange={(e) => setUserInstaId(e.target.value)}
-            />
-            </div>
-            <br />
-            <br />
           </div>
-            <br />
-            <br />
-          {/* <button className="btn2" type="submit">Add Post</button> */}
-          <UploadButton/>
+          {showInstaIdInput && (
+            <div className="instaid-cnt">
+              <label htmlFor="userInstaId" className="insta-id-label">
+                Instagram ID:
+                <input
+                  type="text"
+                  id="userInstaId"
+                  value={userInstaId}
+                  onChange={(e) => setUserInstaId(e.target.value)}
+                  className="insta-id-input"
+                />
+              </label>
+            </div>
+          )}
+          <UploadButton type="submit" className="upload-button" />
         </form>
       </div>
     </>

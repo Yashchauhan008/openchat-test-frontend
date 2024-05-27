@@ -5,6 +5,8 @@
   justify-content: center;
   flex-direction: column;
   gap: 20px;
+  box-sizing: border-box;
+  /* width: 90vw; */
 }
 
 .filter-buttons {
@@ -43,15 +45,28 @@
 }
 
 .post-top h2 {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .index {
+  font-size: 20px;
+  /* background-color: red; */
+  position: absolute;
+  top: 2px;
+  left: 0;
   color: #666;
 }
 .post-top h1 {
   font-size: 22px;
+  padding-left: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  /* font-family: ; */
+  /* background-color: pink; */
 }
 
 .post-bottom {
@@ -72,12 +87,18 @@
 
 .ldbuttons {
   /* background-color: red; */
+  font-weight: 600;
+  color: var(--color-2);
+  /* gap: 2px; */
   position: relative;
   right: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+.ldbuttons p{
+  padding-bottom: 2px;
 }
 
 .like input {
@@ -102,18 +123,17 @@
   height: 30px;
   width: 30px;
   transition: all 0.3s;
-  fill: #666;
+  fill: #4dd94d95;
   rotate: 180deg;
 }
 
 .like svg:hover {
   transform: scale(1.1) rotate(-10deg);
+  background-color: #6666663e;
+  padding: 0px 5px;
+  border-radius: 10px;
 }
 
-.like.active svg {
-  fill: rgb(174, 69, 69);
-  transform: scale(1.2);
-}
 
 .dislike input {
   position: absolute;
@@ -137,20 +157,29 @@
   height: 30px;
   width: 30px;
   transition: all 0.3s;
-  fill: #666;
+  fill: #F8632095;
 }
 
 .dislike svg:hover {
   transform: scale(1.1) rotate(-10deg);
+  background-color: #6666663e;
+  padding: 0px 5px;
+  border-radius: 10px;
 }
 
 .like.active svg {
-  fill: green;
-  transform: scale(1.2);
+  fill: rgb(77, 217, 77);
+  transform: scale(1.2) rotate(-10deg);
+  background-color:#4dd94d3e;
+  padding: 0px 5px;
+  border-radius: 10px;
 }
 .dislike.active svg {
-  fill: rgb(185, 51, 51);
-  transform: scale(1.2);
+  fill:var(--bg-color);
+  transform: scale(1.2) rotate(-10deg);
+  background-color:#F863203e;
+  padding: 0px 5px;
+  border-radius: 10px;
 }
 
 .instalogo {
@@ -335,6 +364,7 @@ transform :rotate(270deg);
   border-radius: 10px;
   height: 40px;
   /* width: 80px; */
+  text-decoration: none;
   padding: 0 10px;
   gap: 5px;
   background-color:var(--bg-color);
@@ -357,4 +387,25 @@ transform :rotate(270deg);
 .main span{
   color:var(--bg-color);
   text-decoration: underline 2px;
+}
+
+@media only screen and (max-width: 600px) {
+  .header{
+    /* background-color: red; */
+    width: 90vw;
+  }
+
+  .main{
+    width: 90vw;
+    padding: 20px 0;
+    font-size: 15px;
+  }
+
+  .filter-buttons{
+    width: 300px;
+  }
+
+  .postblock{
+    width:90vw;
+  }
 }

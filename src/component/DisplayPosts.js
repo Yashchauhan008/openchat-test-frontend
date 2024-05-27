@@ -180,11 +180,11 @@ const DisplayPosts = () => {
           <div className="postblock" key={post._id}>
             <div
               className="post-top"
-              onClick={() => navigate(`/post/${post._id}`)}
+              // onClick={() => navigate(`/post/${post._id}`)}
             >
               <h2>
-                <h1 className="index">{index}.</h1>
-                <h1>&nbsp;{post.content}</h1>
+                <div className="index">{index}.</div>
+                <h1>{post.content}</h1>
               </h2>
               {/* <p>{post.username}</p> */}
               <div className="post-bottom">

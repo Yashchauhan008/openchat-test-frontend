@@ -86,6 +86,8 @@ img{
     color: var(--bg-color);
 }
 .lhome p{
+    width: 500px;
+    padding-left: 70px;
     font-weight:500;
     transform: translateX(-10px);
 }
@@ -342,10 +344,13 @@ img:hover{
 }
 .chat2{
     top: 200px;
-    right: 160px;
+    right: 60px;
     background-color: var(--color-3);
     color: var(--bg-color);
     border-radius: 20px 20px 20px 0px;
+}
+.footer{
+    padding: 20px 0;
 }
 
 @keyframes moveUpDown {
@@ -362,37 +367,128 @@ img:hover{
   .chatblock{
     width: 800px;
   }
-
+  a{
+    text-decoration: none;
+}
 
 
   /* Mobile devices (up to 600px) */
 @media only screen and (max-width: 600px) {
-    .yash-banner {
-      font-size: 8px;
-      padding: 5px 20px;
+    .home{
+        width: 100vw;
+        height: 100vh;
+        background-color: var(--color-1);
     }
-  }
-  
-  /* Tablets (601px to 900px) */
-  @media only screen and (min-width: 601px) and (max-width: 900px) {
-    .yash-banner {
-      font-size: 9px;
-      padding: 8px 30px;
+
+    nav{
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-  }
-  
-  /* Laptops and desktops (901px and up) */
-  @media only screen and (min-width: 901px) and (max-width: 1200px) {
-    .yash-banner {
-      font-size: 10px;
-      padding: 10px 40px;
+    .headline{
+        /* width: 400px; */
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-  }
-  
-  /* Large desktops (1201px and up) */
-  @media only screen and (min-width: 1201px) {
-    .yash-banner {
-      font-size: 12px;
-      padding: 12px 50px;
+    .headline h2{
+        width: 450px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        position: relative;
     }
+    .headline h2 h1:nth-child(1){
+        flex-wrap: nowrap;
+    }
+    .headline h2 h1{
+        font-size: 40px;
+        line-height: 45px;
+    }
+    /* .description{
+        background-color: red;
+        width: 400px;
+    } */
+    .lhome p{
+        padding: 10px 0 20px 0;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 95vw;
+        text-align: center;
+    }
+    /* .homeform{
+        width: 100vw;
+        transform: translateX(50px);
+    } */
+    form{
+        /* width: 95vw; */
+        padding-left: 30vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        transform: translateX(0) translateY(0);
+    }
+    .lhome input{
+        border-radius: 20px 20px 0 20px;
+    }
+    .lhome button{
+        border-radius:20px 20px 20px 0;
+    }
+    .emoji{
+        display: none;
+    }
+    .rhome{
+transform: translateY(-35vh);
+        padding: 0;
+        height: 10vh;
+        margin: 0;
+        /* top: 50vh; */
+        width: 95vw;
+        position: absolute;
+    }
+    .av1{
+        display: none;
+        /* position: absolute; */
+        top: 50vh;
+        right: 0vw;
+    }
+    .av2{
+        position: absolute;
+        top: 45vh;
+        right: 60vw;
+    }
+    .av3{
+        /* display: none; */
+        position: absolute;
+        top: 60vh;
+        right: -5vw;
+        scale: 0.8;
+    }
+    .interection{
+        scale: 0.9;
+        top: 50vh;
+        rotate: 15deg;
+        left: 35vw;
+    }
+    .chat1{
+        display: none;
+    }
+    .chat2{
+        top: 64vh;
+        scale: 0.7;
+        rotate: -10deg;
+        right: 35vw;
+        border-radius: 30px 30px 0 30px;
+    }
+    .yash-banner{
+
+        text-align: center;
+        z-index: 10000;
+        text-decoration: none;
+    }
+    
   }

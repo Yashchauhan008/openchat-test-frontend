@@ -11,10 +11,19 @@ function LandingPage() {
 
   return (
     <div className="landingPage">
-      <Header/>
-      <h1 className="main"> <p>Write your best <span>#Hacks </span>&<span> #Achivments</span>.</p><p>No account needed!</p></h1>
+      <Header />
+      <h1 className="main">
+        {" "}
+        <p>
+          Write your best <span>#Hacks </span>&<span> #Achivments</span>.
+        </p>
+        <p>No account needed!</p>
+      </h1>
       <DisplayPosts />
       {/* <hr /> */}
+      <div className="footer">
+        <p>&copy; 2024 OpenTalk. All rights reserved.</p>
+      </div>
     </div>
   );
 }

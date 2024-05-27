@@ -9,11 +9,11 @@ export const Header = () => {
     
   return (
     <div className="header">
-    <a className="yash">
+    <a className="yash" href='https://yash-folio.netlify.app/'>
       <img src={avatar} />
       <span>YASH</span>
     </a>
-    <h1>opentalk</h1>
+    <h1 onClick={()=>navigate('/posts')} >opentalk</h1>
     <button class="Btn" onClick={() => navigate("/upload")}>
       <div class="sign">
         <svg viewBox="0 0 512 512">
