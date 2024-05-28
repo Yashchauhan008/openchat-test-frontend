@@ -10,11 +10,12 @@
   }
   
   .upload form {
-    width: 600px;
+    width: 601px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    /* background-color: green; */
   }
   
   .upload form textarea {
@@ -57,10 +58,21 @@
         top: 100px;
         left: 10px;
     }
+    .upload form{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      width: 200px;
+      padding: 0;
+    }
     .upload{
         background-color: var(--color-1);
         width: 100vw;
         margin: 0;
         padding: 0;
+    }
+    textarea{
+      width: 300px;
     }
   }

@@ -391,13 +391,20 @@ transform :rotate(270deg);
 }
 
 @media only screen and (max-width: 600px) {
+  
   .header{
     /* background-color: red; */
     width: 90vw;
   }
-
+  .posts{
+    padding-top: 8vh;
+  }
+  .filter-buttons{
+    position: absolute;
+    top: 25vh;
+  }
   .main{
-    width: 90vw;
+    /* width: 90vw; */
     padding: 20px 0;
     font-size: 15px;
   }
