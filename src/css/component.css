@@ -105,13 +105,10 @@
   animation: fly-1 0.6s ease-in-out infinite alternate;
 }
 
-.btn2:active svg {
-  transform: translateX(5.2em) rotate(45deg) scale(1.1);
+.btn2:checked svg {
+  transform: rotate(85deg) scale(1.1);
 }
 
-.btn2:active span {
-  transform: translateX(15em);
-}
 
 .btn2:active {
   transform: scale(0.95);

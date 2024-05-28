@@ -5,6 +5,7 @@ import logo from "../assets/logo.png";
 import avatar1 from "../assets/avatar1.jpeg";
 import avatar2 from "../assets/avatar2.jpeg";
 import avatar3 from "../assets/avatar3.jpeg";
+import Swal from 'sweetalert2';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -24,25 +25,46 @@ const HomePage = () => {
     const savedData = localStorage.getItem("userData");
     if (savedData) {
       const userData = JSON.parse(savedData);
-      if (userData.username) {
-        navigate("/posts");
-      }
+      // if (userData.username) {
+      //   navigate("/posts");
+      // }
     }
   }, [navigate]);
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+
+  //   alert("once the username is save then it can not be change")
+  //   const newData = { ...data, username: username };
+  //   setData(newData);
+  //   localStorage.setItem("userData", JSON.stringify(newData));
+  //   console.log("Data stored in local storage:", newData);
+
+  //   setUsername(""); // Clear input field after submission
+  //   navigate("/posts"); // Navigate to '/posts' route after form submission
+  // };
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    alert("once the username is save then it can not be change")
-    const newData = { ...data, username: username };
-    setData(newData);
-    localStorage.setItem("userData", JSON.stringify(newData));
-    console.log("Data stored in local storage:", newData);
-
-    setUsername(""); // Clear input field after submission
-    navigate("/posts"); // Navigate to '/posts' route after form submission
+  
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Once the username is saved, it cannot be changed',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, save it!',
+      cancelButtonText: 'No, cancel!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const newData = { ...data, username: username };
+        setData(newData);
+        localStorage.setItem('userData', JSON.stringify(newData));
+        console.log('Data stored in local storage:', newData);
+  
+        setUsername(''); // Clear input field after submission
+        navigate('/posts'); // Navigate to '/posts' route after form submission
+      }
+    });
   };
-
   return (
     <>
       <div className="home">

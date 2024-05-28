@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { formatDistanceToNow } from 'date-fns';
 import { useParams } from 'react-router-dom';
+import { BASE_URL } from '../utils/baseurl';
 
 const ShowPost = () => {
   const { id } = useParams();
@@ -27,7 +28,7 @@ const ShowPost = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/post/${id}`);
+        const response = await axios.get(`${BASE_URL}post/${id}`);
         setPost(response.data);
         setLoading(false);
       } catch (error) {

@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import axios from "axios";
 import DisplayPosts from "../component/DisplayPosts";
 import { useNavigate } from "react-router-dom";
 import "../css/displaypost.css";
-import avatar from "../assets/verified.png";
 import { Header } from "../component/Header";
 function LandingPage() {
   // const navigate = useNavigate()

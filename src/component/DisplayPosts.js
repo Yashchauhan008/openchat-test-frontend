@@ -4,6 +4,7 @@ import { formatDistanceToNow } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import "../css/displaypost.css";
 import insta from "../assets/instagram.png";
+import baseurl, { BASE_URL } from "../utils/baseurl"
 
 const DisplayPosts = () => {
   const [posts, setPosts] = useState([]);
@@ -34,7 +35,7 @@ const DisplayPosts = () => {
   const fetchPosts = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:5000/post");
+      const response = await axios.get(`${BASE_URL}post`);
       let sortedPosts = response.data;
       if (filter === "top") {
         sortedPosts = sortedPosts.sort(
@@ -80,14 +81,14 @@ const DisplayPosts = () => {
   const handleLikeChange = async (postId, isLiked, isMoving) => {
     try {
       if (isLiked) {
-        await axios.post(`http://localhost:5000/post/${postId}/like`);
+        await axios.post(`${BASE_URL}post/${postId}/like`);
         if (isMoving) {
           updatePostLikesDislikes(postId, "like", 2); // Increase the like count by 2
         } else {
           updatePostLikesDislikes(postId, "like", 1); // Increase the like count by 1
         }
       } else {
-        await axios.post(`http://localhost:5000/post/${postId}/dislike`);
+        await axios.post(`${BASE_URL}post/${postId}/dislike`);
         if (isMoving) {
           updatePostLikesDislikes(postId, "dislike", 2); // Increase the dislike count by 2
         } else {
@@ -172,7 +173,14 @@ const DisplayPosts = () => {
         </button>
       </div>
       {loading ? (
-        <p>Loading posts...</p>
+        <div class="pre-cnt">
+        <div class="preloader">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="shadow"></div>
+      </div>
       ) : error ? (
         <p>{error}</p>
       ) : (
@@ -183,7 +191,7 @@ const DisplayPosts = () => {
               // onClick={() => navigate(`/post/${post._id}`)}
             >
               <h2>
-                <div className="index">{index}.</div>
+                <div className="index">{index+1}.</div>
                 <h1>{post.content}</h1>
               </h2>
               {/* <p>{post.username}</p> */}
