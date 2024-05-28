@@ -25,24 +25,13 @@ const HomePage = () => {
     const savedData = localStorage.getItem("userData");
     if (savedData) {
       const userData = JSON.parse(savedData);
-      // if (userData.username) {
-      //   navigate("/posts");
-      // }
+      if (userData.username) {
+        navigate("/posts");
+      }
     }
   }, [navigate]);
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
 
-  //   alert("once the username is save then it can not be change")
-  //   const newData = { ...data, username: username };
-  //   setData(newData);
-  //   localStorage.setItem("userData", JSON.stringify(newData));
-  //   console.log("Data stored in local storage:", newData);
-
-  //   setUsername(""); // Clear input field after submission
-  //   navigate("/posts"); // Navigate to '/posts' route after form submission
-  // };
   const handleSubmit = (e) => {
     e.preventDefault();
   
